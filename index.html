@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Selector</title>
+    <script>
+        const countryNames = ["Inductor", "Resistor", "Capacitor", "Relay"];
+        let submittedCountries = []; // Array to store all submitted countries
+
+        // Function to populate the dropdown with all components initially
+        function populateDropdown() {
+            const dropdown = document.getElementById("countryDropdown");
+            dropdown.innerHTML = ""; // Clear existing options
+
+            countryNames.forEach(country => {
+                const option = document.createElement("option");
+                option.value = country;
+                option.textContent = country;
+                dropdown.appendChild(option);
+            });
+        }
+
+        // Function to filter countries based on the input
+        function filterCountries() {
+            const input = document.getElementById("countryInput").value.toLowerCase();
+            const filteredCountries = countryNames.filter(country => {
+                return country.toLowerCase().includes(input);
+            });
+
+            const dropdown = document.getElementById("countryDropdown");
+            dropdown.innerHTML = ""; // Clear existing options
+
+            filteredCountries.forEach(country => {
+                const option = document.createElement("option");
+                option.value = country;
+                option.textContent = country;
+                dropdown.appendChild(option);
+            });
+        }
+
+        // Function to handle submission of the selected country
+        async function submitCountry() {
+            const dropdown = document.getElementById("countryDropdown");
+            const selectedCountry = dropdown.value;
+            if (selectedCountry) {
+                submittedCountries.unshift(selectedCountry); // Add to the beginning of the array
+                const url = `https://script.google.com/macros/s/sript_id/exec?sts=write&srs=${selectedCountry.toLowerCase()}`;
+
+                try {
+                    // Make the request in the background
+                    await fetch(url);
+                   
+                    // Display all submitted countries with serial numbers from bottom to top
+                    const message = submittedCountries.map((country, index) => `${submittedCountries.length - index}. ${country}`).join('<br>');
+                    document.getElementById("submissionMessage").innerHTML = message;
+                } catch (error) {
+                    console.error("Error submitting the country:", error);
+                    alert("An error occurred while submitting. Please try again.");
+                }
+            } else {
+                alert("Please select a component.");
+            }
+        }
+
+        // Populate dropdown on page load
+        window.onload = populateDropdown;
+    </script>
+</head>
+<body>
+    <input type="text" id="countryInput" oninput="filterCountries()" placeholder="Type a component">
+    <select id="countryDropdown"></select>
+    <button onclick="submitCountry()">Submit</button>
+    <div id="submissionMessage" style="margin-top: 10px; font-weight: bold;"></div> <!-- Message display area -->
+</body>
+</html>
+
