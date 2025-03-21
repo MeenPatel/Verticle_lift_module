@@ -8,9 +8,9 @@ int blockNum = 2;
 byte bufferLen = 18;
 byte readBlockData[18];
 String card_holder_name;
-const String sheet_url = "https://script.google.com/macros/s/AKfycbyr8g1qHVxfMUz1h2mXK0V0NbJeEuakv2khPJ9uzxf5feT4DxcTEwWTYhvbnpSqz3ZI/exec";
-#define WIFI_SSID "MEENLAPTOP 7965"
-#define WIFI_PASSWORD "9173111523"
+const String sheet_url = "https://script.google.com/macros/s/script_id/exec";
+#define WIFI_SSID "WIFI_SSID"
+#define WIFI_PASSWORD "WIFI_PASSWORD"
 String Status_Read_Sensor = "";
 
 int Floor,Side=0;
